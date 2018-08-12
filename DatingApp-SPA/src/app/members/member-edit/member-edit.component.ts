@@ -14,6 +14,7 @@ import { AuthService } from '../../_service/auth.service';
 export class MemberEditComponent implements OnInit {
 @ViewChild('editForm') editForm: NgForm;
 user: User;
+photoUrl: string;
 
 // For listening close event of browser and show confirm box
 @HostListener('window:beforeunload', ['$event'])
@@ -30,6 +31,7 @@ unloadNotification($event: any) {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
+    this.authService.currentPhotoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
   }
 
   updateUser() {
@@ -41,6 +43,10 @@ unloadNotification($event: any) {
       this.alertify.error(error);
     });
 
+  }
+
+  updateMainPhoto(photoUrl) {
+    this.user.photoUrl = photoUrl;
   }
 
 }
